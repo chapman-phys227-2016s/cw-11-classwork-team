@@ -1,8 +1,8 @@
 # PHYS227 CW 11
 
-**Author(s):** _\<your name(s)\>_
+**Author(s):** Michael Seaman, Taylor Patti, Austin Ayers, Chinmai Raman, Andrew Malfavon
 
-[![Build Status](https://travis-ci.org/chapman-phys227-2016s/cw-11-YOURTEAM.svg?branch=master)](https://travis-ci.org/chapman-phys227-2016s/cw-11-YOURTEAM)
+[![Build Status](https://travis-ci.org/chapman-phys227-2016s/cw-11-classwork-team.svg?branch=master)](https://travis-ci.org/chapman-phys227-2016s/cw-11-classwork-team)
 
 **Due date:** 2016/05/03
 
@@ -39,4 +39,4 @@ I pledge that all the work in this repository is my own with only the following 
 
 Signed,
 
-_\<your name(s)\>_
+Michael Seaman, Taylor Patti, Austin Ayers, Chinmai Raman, Andrew Malfavon

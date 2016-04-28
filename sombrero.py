@@ -36,11 +36,12 @@ class Sombrero():
         y_dot(t) = ...
         """
         return ( -1 * self.delta * yt + xt - xt ** 3 + self.F * cos(self.w * t) ) / self.m
-    def rk4(self, f, x0, y0, n, h = self.h):
+    def rk4(self, f1, f2, x0, y0, n, h = self.h):
         """
         Runge Kutta 4 function
 
-        Arguments: f (function being differentiated)
+        Arguments: f1 (first coupled function being differentiated)
+                   f2 (second coupled function being differentiated)
                    x0 (initial x point)
                    y0 (initial y point)
                    n (number of points to be calculated in rk4)

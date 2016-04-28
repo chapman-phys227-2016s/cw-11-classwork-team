@@ -10,7 +10,7 @@ Assignment: Plots sombrero and motion of ball in said sombrero.
 Date: April 26, 2016
 Email: ayers111@mail.chapman.edu
 Name: Austin Ayers
-Description: Numerically solves Newton's equations for a ball being shaken in a sombrero by constant driving force.
+Description: Numerically solves Newton's equations for a ball being shaken in a sombrero by sinusoidal driving force.
 """
 from math import sqrt
 from math import cos
@@ -68,15 +68,13 @@ class Sombrero():
             k3_1 = h*f1(x + 0.5*h, y + 0.5*k2_1)
             k4_1 = h*f1(x + h, y + k3_1)
 
-            vx_1[i] = x = x0 + i*h
-            vy_1[i] = y = y + (k1_1 + k2_1 + k2_1 + k3_1 + k3_1 + k4_1)/6
-
-            ###########################
-
             k1_2 = h*f2(x, y)
             k2_2 = h*f2(x + 0.5*h, y + 0.5*k1_2)
             k3_2 = h*f2(x + 0.5*h, y + 0.5*k2_2)
             k4_2 = h*f2(x + h, y + k3_2)
+
+            vx_1[i] = x = x0 + i*h
+            vy_1[i] = y = y + (k1_1 + k2_1 + k2_1 + k3_1 + k3_1 + k4_1)/6
 
             vx_2[i] = x = x0 + i*h
             vy_2[i] = y = y + (k1_2 + k2_2 + k2_2 + k3_2 + k3_2 + k4_2)/6

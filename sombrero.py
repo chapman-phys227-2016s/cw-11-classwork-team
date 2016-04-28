@@ -47,21 +47,39 @@ class Sombrero():
                    n (number of points to be calculated in rk4)
                    h (delta of x)
 
-        Outputs: vx (array of x points, subdivided n times)
-                 vy (array of y points, answer array which is output of rk4)
+        Outputs: vx_1 (array of x points, subdivided n times)
+                 vy_1 (array of y points, answer array which is output of rk4 - tied to vx_1)
+                 vx_2 (array of x points, subdivided n times)
+                 vy_2 (array of y points, answer array which is output of rk4 - tied to vx_1)
         """
-        vx = [0]*(n + 1)
-        vy = [0]*(n + 1)
-        vx[0] = x = x0
-        vy[0] = y = y0
+        vx_1 = [0]*(n + 1)
+        vy_1 = [0]*(n + 1)
+        vx_1[0] = x = x0
+        vy_1[0] = y = y0
+
+        vx_2 = [0]*(n + 1)
+        vy_2 = [0]*(n + 1)
+        vx_2[0] = x = x0
+        vy_2[0] = y = y0
+
         for i in range(1, n + 1):
-            k1 = h*f(x, y)
-            k2 = h*f(x + 0.5*h, y + 0.5*k1)
-            k3 = h*f(x + 0.5*h, y + 0.5*k2)
-            k4 = h*f(x + h, y + k3)
-            vx[i] = x = x0 + i*h
-            vy[i] = y = y + (k1 + k2 + k2 + k3 + k3 + k4)/6
-        return vx, vy
+            k1_1 = h*f1(x, y)
+            k2_1 = h*f1(x + 0.5*h, y + 0.5*k1_1)
+            k3_1 = h*f1(x + 0.5*h, y + 0.5*k2_1)
+            k4_1 = h*f1(x + h, y + k3_1)
+
+            k1_2 = h*f2(x, y)
+            k2_2 = h*f2(x + 0.5*h, y + 0.5*k1_2)
+            k3_2 = h*f2(x + 0.5*h, y + 0.5*k2_2)
+            k4_2 = h*f2(x + h, y + k3_2)
+
+            vx_1[i] = x = x0 + i*h
+            vy_1[i] = y = y + (k1_1 + k2_1 + k2_1 + k3_1 + k3_1 + k4_1)/6
+
+            vx_2[i] = x = x0 + i*h
+            vy_2[i] = y = y + (k1_2 + k2_2 + k2_2 + k3_2 + k3_2 + k4_2)/6
+
+        return vx_1, vy_1, vx_2, vy_2
 
     #vx, vy = rk4(f, 0, 1, 10, 100)
     #for x, y in list(zip(vx, vy))[::10]:

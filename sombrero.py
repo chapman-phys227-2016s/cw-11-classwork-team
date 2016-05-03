@@ -12,8 +12,7 @@ Email: ayers111@mail.chapman.edu
 Name: Austin Ayers
 Description: Numerically solves Newton's equations for a ball being shaken in a sombrero by sinusoidal driving force.
 """
-from math import sqrt
-from math import cos
+import math
 
 class Sombrero():
     """
@@ -85,3 +84,14 @@ class Sombrero():
     #vx, vy = rk4(f, 0, 1, 10, 100)
     #for x, y in list(zip(vx, vy))[::10]:
     #    print(x, y, y - (4 + x*x)**2/16)
+
+    def test_linear():
+        thisone = Sombrero(0)
+        def line1(x):
+            return 2*x
+        def line2(x):
+            return 5*x
+        x1, y1, x2, y2 = thisone.rk4(line1, line2, 0, 0, 1000)
+        apt = math.fabs(y1[5] == 2 and y2[5] == 5)
+        msg = 'Linear test failed.'
+        assert apt, msg 

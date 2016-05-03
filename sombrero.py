@@ -13,7 +13,7 @@ Name: Austin Ayers
 Description: Numerically solves Newton's equations for a ball being shaken in a sombrero by sinusoidal driving force.
 The pinnacle of groupwork, efficiency,
 """
-import math
+from math import sin, cos
 from unittest import TestCase
 
 
@@ -23,7 +23,7 @@ class Sombrero():
     Class that contains the equations and functions to solve said equations
     Implementation for the 'rk4' function comes from https://rosettacode.org/wiki/Runge-Kutta_method, they're awesome.
     """
-    def __init__(self, F, x_0, y_0, w = 1.0, delta = 0.25, m = 1, h = 0.001):
+    def __init__(self, F, x_0, y_0, w = 1.0, delta = 0.25, m = 1, h = 0.001, n = 10000):
         self.delta = delta
         self.x_0 = x_0
         self.y_0 = y_0
@@ -31,8 +31,9 @@ class Sombrero():
         self.w = w
         self.m = m
         self.h = h
+        self.n = n
 
-        rk4_output = rk4(equation_1, equation_2, self.x_0, self.y_0, 10000)
+        self.rk4_output = self.rk4(self.equation_1, self.equation_2, self.x_0, self.y_0, self.n)
     def equation_1(self, x, y, t):
         """
         x_dot(t) = ...
@@ -43,7 +44,7 @@ class Sombrero():
         y_dot(t) = ...
         """
         return ( -1 * self.delta * y + x - x ** 3 + self.F * cos(self.w * t) ) / self.m
-    def rk4(self, f1, f2, x0, y0, n, h = self.h):
+    def rk4(self, f1, f2, x0, y0, n, h = .001):
         """
         Runge Kutta 4 function
 
@@ -83,7 +84,7 @@ class Sombrero():
 
             t += h
 
-        return vx_1, vy_1, vx_2, vy_2
+        return vx, vy
 
     #vx, vy = rk4(f, 0, 1, 10, 100)
     #for x, y in list(zip(vx, vy))[::10]:
@@ -101,4 +102,12 @@ class test_sombrero(TestCase):
         msg = 'Linear test failed.'
         assert apt, msg 
 
-    
+    def test_analytic_result(self):
+        test_sombrero = Sombrero(.4, 0, 0, n = 1)
+        print test_sombrero.rk4_output
+        assert True
+        """
+        Note to self - edit these later to assert these values
+        x = 1.1666876666666666e-07
+        y = 0.00023334173071666665
+        """

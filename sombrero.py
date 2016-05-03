@@ -11,6 +11,7 @@ Date: April 26, 2016
 Email: ayers111@mail.chapman.edu
 Name: Austin Ayers
 Description: Numerically solves Newton's equations for a ball being shaken in a sombrero by sinusoidal driving force.
+The pinnacle of groupwork, efficiency,
 """
 import math
 from unittest import TestCase

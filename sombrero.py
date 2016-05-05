@@ -35,9 +35,11 @@ class Sombrero():
         self.m = m
         self.h = h
         self.n = n
-
+    def __call__(self):
         self.rk4_output = self.rk4(self.equation_1, self.equation_2, self.x_0, self.y_0, self.n)
-        self.generate_graph()
+        self.generate_parametric_graph()
+        self.generate_x_graph()
+        self.generate_poincare_graph()
     def equation_1(self, x, y, t):
         """
         x_dot(t) = ...
@@ -148,11 +150,16 @@ class Sombrero():
         plt.close(fig)
         
 def run():
-    Sombrero(0.18, -0.9, 0)
-    Sombrero(0.18, 0.9, 0)
-    Sombrero(0.25, 0.2, 0.1)
-    Sombrero(0.25, 0.201, 0.1)
-    Sombrero(0.4, 0, 0)
+    s1 = Sombrero(0.18, -0.9, 0)
+    s2 = Sombrero(0.18, 0.9, 0)
+    s3 = Sombrero(0.25, 0.2, 0.1)
+    s4 = Sombrero(0.25, 0.201, 0.1)
+    s5 = Sombrero(0.4, 0, 0)
+    s1()
+    s2()
+    s3()
+    s4()
+    s5()
     #vx, vy = rk4(f, 0, 1, 10, 100)
     #for x, y in list(zip(vx, vy))[::10]:
     #    print(x, y, y - (4 + x*x)**2/16)

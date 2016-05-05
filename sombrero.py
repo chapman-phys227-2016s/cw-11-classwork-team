@@ -15,7 +15,7 @@ The pinnacle of groupwork, efficiency,
 """
 from math import sin, cos
 from unittest import TestCase
-
+import math
 
 
 class Sombrero():
@@ -92,13 +92,13 @@ class Sombrero():
 
 class test_sombrero(TestCase):
     def test_linear(self):
-        thisone = Sombrero(0)
-        def line1(x):
-            return 2*x
-        def line2(x):
-            return 5*x
-        x1, y1, x2, y2 = thisone.rk4(line1, line2, 0, 0, 1000)
-        apt = math.fabs(y1[5] == 2 and y2[5] == 5)
+        thisone = Sombrero(0, 0, 0)
+        def line1(x, y, t):
+            return 2
+        def line2(x, y, t):
+            return 5
+        y1, y2 = thisone.rk4(line1, line2, 0, 0, 1000)
+        apt = (math.fabs(y1[5] - 0.001*5*2) < 1e-5)  and ((y2[5] - 0.001*5*5) < 1e-5)
         msg = 'Linear test failed.'
         assert apt, msg 
 

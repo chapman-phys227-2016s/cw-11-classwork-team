@@ -29,6 +29,8 @@ Your homework this week will be to finish this classwork assignment, and then us
 ## Assessment
 
 
+This was a good assignment. So said all.
+
 
 ## Honor Pledge
 

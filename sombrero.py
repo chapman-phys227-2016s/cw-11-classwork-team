@@ -16,7 +16,10 @@ The pinnacle of groupwork, efficiency,
 from math import sin, cos
 from unittest import TestCase
 import math
-
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 class Sombrero():
     """
@@ -85,6 +88,25 @@ class Sombrero():
             t += h
 
         return vx, vy
+    
+    def generate_graph(self):
+        """
+        Generates images ('.png's) of the plots of the Runge Kutta's
+        solutions as well as the exact solutions.
+        """
+        
+        approx_values = self.rk4_output
+        u_list_approx = approx_values[0]
+        v_list_approx = approx_values[1]
+        
+        fig, ax = plt.subplots(nrows = 1, ncols = 1)
+        ax.plot(u_list_approx, v_list_approx, 'r')
+        ax.set_xlabel("u(t)")
+        ax.set_ylabel("v(t)")
+        ax.set_title("Sombrero approximation for n = " + str(self.n) + " and F = " + str(self.F))
+        ax.grid(True)
+        fig.savefig(self.__class__.__name__ + '_%3d.png' % (self.n))
+        plt.close(fig)
 
     #vx, vy = rk4(f, 0, 1, 10, 100)
     #for x, y in list(zip(vx, vy))[::10]:

@@ -15,12 +15,11 @@ The pinnacle of groupwork, efficiency,
 """
 from math import sin, cos
 from unittest import TestCase
+import math
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-
-
 
 class Sombrero():
     """
@@ -91,7 +90,7 @@ class Sombrero():
 
         return vx, vy
     
-    def generate_graph(self):
+    def generate_parametric_graph(self):
         """
         Generates images ('.png's) of the plots of the Runge Kutta's
         solutions as well as the exact solutions.
@@ -103,13 +102,51 @@ class Sombrero():
         
         fig, ax = plt.subplots(nrows = 1, ncols = 1)
         ax.plot(u_list_approx, v_list_approx, 'r')
-        ax.set_xlabel("u(t)")
-        ax.set_ylabel("v(t)")
-        ax.set_title("Sombrero approximation for n = " + str(self.n) + " and F = " + str(self.F))
+        ax.set_xlabel("x(t)")
+        ax.set_ylabel("y(t)")
+        ax.set_title("Sombrero approximation (parametric) for n = " + str(self.n) + " and F = " + str(self.F))
         ax.grid(True)
-        fig.savefig(self.__class__.__name__ + '_%3d.png' % (self.n))
+        fig.savefig(self.__class__.__name__ + '_parametric'+ '_%3d' % (self.F) + '_%3d' % (self.x_0)  +  '_%3d' % (self.y_0) +  '_%3d.png' % (self.n))
         plt.close(fig)
 
+    def generate_x_graph(self):
+        """
+        Generates images ('.png's) of the plots of the Runge Kutta's
+        solutions as well as the exact solutions.
+        """
+        
+        approx_values = self.rk4_output
+        x_list_approx = approx_values[0]
+        t_list = np.arange(0, self.h * (self.n + 1), self.h)
+        
+        fig, ax = plt.subplots(nrows = 1, ncols = 1)
+        ax.plot(t_list, x_list_approx, 'r')
+        ax.set_xlabel("t")
+        ax.set_ylabel("x(t)")
+        ax.set_title("Sombrero approximation for x(t) for n = " + str(self.n) + " and F = " + str(self.F))
+        ax.grid(True)
+        fig.savefig(self.__class__.__name__ + '_x' + '_%3d' % (self.F) + '_%3d' % (self.x_0)  +  '_%3d' % (self.y_0) +  '_%3d.png' % (self.n))
+        plt.close(fig)
+
+    def generate_poincare_graph(self):
+        """
+        Generates images ('.png's) of the plots of the Runge Kutta's
+        solutions as well as the exact solutions.
+        """
+        
+        approx_values = self.rk4_output
+        u_list_approx = approx_values[0]
+        v_list_approx = approx_values[1]
+        
+        fig, ax = plt.subplots(nrows = 1, ncols = 1)
+        ax.plot(u_list_approx, v_list_approx, 'r.')
+        ax.set_xlabel("x(t)")
+        ax.set_ylabel("y(t)")
+        ax.set_title("Sombrero approximation (poincare) for n = " + str(self.n) + " and F = " + str(self.F))
+        ax.grid(True)
+        fig.savefig(self.__class__.__name__ + '_poincare'+ '_%3d' % (self.F) + '_%3d' % (self.x_0)  +  '_%3d' % (self.y_0) +  '_%3d.png' % (self.n))
+        plt.close(fig)
+        
 def run():
     Sombrero(0.18, -0.9, 0)
     Sombrero(0.18, 0.9, 0)
@@ -122,22 +159,13 @@ def run():
 
 class test_sombrero(TestCase):
     def test_linear(self):
-        thisone = Sombrero(0)
-        def line1(x):
-            return 2*x
-        def line2(x):
-            return 5*x
-        x1, y1, x2, y2 = thisone.rk4(line1, line2, 0, 0, 1000)
-        apt = math.fabs(y1[5] == 2 and y2[5] == 5)
+        thisone = Sombrero(0, 0, 0)
+        def line1(x, y, t):
+            return 2
+        def line2(x, y, t):
+            return 5
+        y1, y2 = thisone.rk4(line1, line2, 0, 0, 1000)
+        apt = (math.fabs(y1[5] - 0.001*5*2) < 1e-5)  and ((y2[5] - 0.001*5*5) < 1e-5)
         msg = 'Linear test failed.'
         assert apt, msg 
 
-    def test_analytic_result(self):
-        test_sombrero = Sombrero(.4, 0, 0, n = 1)
-        print test_sombrero.rk4_output
-        assert True
-        """
-        Note to self - edit these later to assert these values
-        x = 1.1666876666666666e-07
-        y = 0.00023334173071666665
-        """
